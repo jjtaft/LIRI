@@ -1,16 +1,20 @@
 
 
-var keys = require('./keys.js');
+
 var twitter = require("twitter");
+var keys = require('./keys.js');
+
 var spotify = require("spotify");
+
 var request = require("request");
+
 var fs = require("fs");
 
 console.log("Enter one of the following commands to begin;");
 console.log("my-tweets");
-console.log("spotify-this-song <plus a song title of your choosing>")
-console.log("movie-this <plus a movie title of your choosing>")
-console.log("do-what-it-says")
+console.log("spotify-this-song <plus a song title of your choosing>");
+console.log("movie-this <plus a movie title of your choosing>");
+console.log("do-what-it-says");
 
 var userCommand = process.argv[2];
 var userInput = process.argv[3];
@@ -58,7 +62,7 @@ function retrieveTweets() {
         	console.log('Error');
         } else {
             for (i = 0; i < tweets.length; i++) {
-                var displayTweets = ('Tweet History: ' + '\n' + tweets[i].created_at + '\n' + tweets[i].text + '\n');
+                var displayTweets = (tweets[i].created_at + '\n' + tweets[i].text);
                 console.log(displayTweets);
             }
         };
@@ -76,15 +80,14 @@ function searchSpotify() {
     } 
 
     spotify.search({  type:'track', query: songSearch },  function(err,  data)  {    
-        if  ( err )  {         console.log('Error occurred: '  +  err);        
-            return;		} else {
+        if  ( err )  {         
+        	console.log('Error occurred: '  +  err);        
+            } else {
             console.log("Artist: " + data.tracks.items[0].artists[0].name);
             console.log("Song: " + data.tracks.items[0].name);
             console.log("Preview Link: " + data.tracks.items[0].preview_url);
             console.log("Album: " + data.tracks.items[0].album.name);
-
         }
-
     });
 };
 
