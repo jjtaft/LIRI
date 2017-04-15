@@ -19,7 +19,6 @@ console.log("do-what-it-says");
 var userCommand = process.argv[2];
 var userInput = process.argv[3];
 
-function commandSwitch() {
 
     switch (userCommand) {
 
@@ -39,11 +38,9 @@ function commandSwitch() {
             accessTextFile();
             break;
     }
-};
 
 
 function retrieveTweets() {
-
 
     var client = new twitter({
         consumer_key: keys.twitterKeys.consumer_key,
@@ -62,7 +59,7 @@ function retrieveTweets() {
         	console.log('Error');
         } else {
             for (i = 0; i < tweets.length; i++) {
-                var displayTweets = (tweets[i].created_at + '\n' + tweets[i].text);
+                var displayTweets = (tweets[i].created_at + '\n' + tweets[i].text + '\n');
                 console.log(displayTweets);
             }
         };
