@@ -1,8 +1,10 @@
+
+
 var keys = require('./keys.js');
 var twitter = require("twitter");
 var spotify = require("spotify");
 var request = require("request");
-var fs = require('fs');
+var fs = require("fs");
 
 console.log("Enter one of the following commands to begin;");
 console.log("my-tweets");
@@ -56,7 +58,7 @@ function retrieveTweets() {
         	console.log('Error');
         } else {
             for (i = 0; i < tweets.length; i++) {
-                var displayTweets = ('Tweet #: ' + (i + 1) + '\n' + tweets[i].created_at + '\n' + tweets[i].text + '\n');
+                var displayTweets = ('Tweet History: ' + '\n' + tweets[i].created_at + '\n' + tweets[i].text + '\n');
                 console.log(displayTweets);
             }
         };
@@ -73,7 +75,7 @@ function searchSpotify() {
         songSearch = userInput;
     } 
 
-    spotify.search({  type:   'track',  query: songSearch },  function(err,  data)  {    
+    spotify.search({  type:'track', query: songSearch },  function(err,  data)  {    
         if  ( err )  {         console.log('Error occurred: '  +  err);        
             return;		} else {
             console.log("Artist: " + data.tracks.items[0].artists[0].name);
@@ -83,5 +85,32 @@ function searchSpotify() {
 
         }
 
+    });
+};
+
+function omdbSearch(){
+
+	var movieTitle;
+	if(userInput === undefined){
+		movieTitle = "Mr. Nobody";
+	}else{
+		movieTitle = userInput;
+	};
+
+	var url = 'http://www.omdbapi.com/?t=' + movieTitle +'&y=&plot=long&tomatoes=true&r=json';
+
+   	request(url, function(error, response, body){
+	    if(error){
+	    	console.log("Error");
+	    } else {
+	        console.log("Title: " + JSON.parse(body)["Title"]);
+	        console.log("Year: " + JSON.parse(body)["Year"]);
+	        console.log("IMDB Rating: " + JSON.parse(body)["imdbRating"]);
+	        console.log("Country: " + JSON.parse(body)["Country"]);
+	        console.log("Language: " + JSON.parse(body)["Language"]);
+	        console.log("Plot: " + JSON.parse(body)["Plot"]);
+	        console.log("Actors: " + JSON.parse(body)["Actors"]);
+	        console.log("Rotten Tomatoes URL: " + JSON.parse(body)["tomatoURL"]);
+	    }
     });
 };
